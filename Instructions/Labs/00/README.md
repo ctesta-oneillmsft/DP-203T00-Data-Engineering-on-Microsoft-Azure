@@ -1,6 +1,8 @@
 # Module 0 - Lab environment setup
 
-This module helps learners prepare their lab environments for the modules that follow. Please run through these instructions prior to starting Module 1.
+Time to complete: 56 minutes
+
+The following instructions enables learners to prepare their lab environments for the modules that follow. Please run through these instructions prior to starting Module 1. These instructions are provided on the assumption you will be using a pre-installed virtual machine provided for the course
 
 ## Lab details
 
@@ -10,13 +12,10 @@ This module helps learners prepare their lab environments for the modules that f
   - [Exercise 1: Azure setup](#exercise-1-azure-setup)
     - [Task 1: Register resource providers](#task-1-register-resource-providers)
     - [Task 2: Create a resource group in Azure](#task-2-create-a-resource-group-in-azure)
-    - [Task 3: Create an Azure VM for the deployment scripts and desktop applications](#task-3-create-an-azure-vm-for-the-deployment-scripts-and-desktop-applications)
-    - [Task 4: Create Azure resources](#task-4-create-azure-resources)
+    - [Task 3: Create Azure resources](#task-3-create-azure-resources)
   - [Exercise 2: Setup Synapse Analytics workspace](#exercise-2-setup-synapse-analytics-workspace)
-    - [Task 1: Pre-requisites](#task-1-pre-requisites)
-    - [Task 2: Download artifacts and install PowerShell modules](#task-2-download-artifacts-and-install-powershell-modules)
-    - [Task 3: Execute setup scripts](#task-3-execute-setup-scripts)
-    - [Task 4: Create an Azure Databricks cluster](#task-4-create-an-azure-databricks-cluster)
+    - [Task 1: Execute setup scripts](#task-1-execute-setup-scripts)
+    - [Task 2: Create an Azure Databricks cluster](#task-2-create-an-azure-databricks-cluster)
 
 ## Requirements
 
@@ -28,9 +27,11 @@ This module helps learners prepare their lab environments for the modules that f
 
 ## Exercise 1: Azure setup
 
+Time to complete: 27 minutes
+
 ### Task 1: Register resource providers
 
-Time to complete: 3 minutes
+Time to complete: 10 minutes
 
 In Azure, you must register specific resource providers on your subscription before you can deploy services such as Synapse Analytics and Azure Databricks.
 
@@ -40,7 +41,7 @@ In Azure, you must register specific resource providers on your subscription bef
 
     ![The Subscriptions option is highlighted.](media/search-subscriptions.png "Subscriptions search")
 
-3. Select the Azure subscription you will use for your lab environment.
+3. Select the Azure subscription you will use for your lab environment. If you are using an Azure Pass, the sucscription is called "**Azure Pass - Sponsorship**".
 
     ![The subscription is selected.](media/selected-subscription.png "Subscriptions")
 
@@ -120,8 +121,9 @@ In Azure, you must register specific resource providers on your subscription bef
 
     ![The register button is highlighted.](media/register-resource-provider.png "Register")
 
-
 ### Task 2: Create a resource group in Azure
+
+Time to complete: 3 minutes
 
 1. Log into the [Azure Portal](https://portal.azure.com) using your Azure credentials.
 
@@ -136,62 +138,9 @@ In Azure, you must register specific resource providers on your subscription bef
 4. Select the **Create** button once validation has passed.
 
 > **Important**: Take note of the _exact_ resource group name you provided for the steps that follow.
+### Task 3: Create Azure resources
 
-### Task 3: Create an Azure VM for the deployment scripts and desktop applications
-
-We highly recommend executing the PowerShell scripts on an Azure Virtual Machine instead of from your local machine. Doing so eliminates issues due to pre-existing dependencies and more importantly, network/bandwidth-related issues while executing the scripts.
-
-1. In the [Azure portal](https://portal.azure.com), type in "virtual machines" in the top search menu and then select **Virtual machines** from the results.
-
-    ![In the Services search result list, Virtual machines is selected.](media/azure-create-vm-search.png "Virtual machines")
-
-2. Select **+ Add** on the Virtual machines page and then select the **Virtual machine** option.
-
-3. In the **Basics** tab, complete the following:
-
-   | Field                          | Value                                              |
-   | ------------------------------ | ------------------------------------------         |
-   | Subscription                   | _select the appropriate subscription_              |
-   | Resource group                 | _select `data-engineering-synapse` (the name of the resource group you created in the previous task)_                      |
-   | Virtual machine name           | _`data-engineering-lab-vm` (or unique name if not available)_      |
-   | Region                         | _select the resource group's location_             |
-   | Availability options           | _select `No infrastructure redundancy required`_   |
-   | Image                          | _select `Windows 10 Pro, Version 20H2 - Gen1` (or newer)_     |
-   | Azure Spot instance            | _set to `Unchecked`_                                      |
-   | Size                           | _select `Standard_D8s_v3`_                         |
-   | Username                       | _select `labuser`_                             |
-   | Password                       | _enter a password you will remember_               |
-   | Public inbound ports           | _select `Allow selected ports`_                    |
-   | Select inbound ports           | _select `RDP (3389)`_                              |
-   | Licensing                      | _select the option to confirm that you have an  eligible Windows 10 license with multi-tenant hosting rights._ |
-
-   ![The form fields are completed with the previously described settings.](media/azure-create-vm-1.png "Create a virtual machine")
-
-4. Select **Review + create**. On the review screen, select **Create**. After the deployment completes, select **Go to resource** to go to the virtual machine.
-
-    ![The Go to resource option is selected.](media/azure-create-vm-2.png "Go to resource")
-
-5. Select **Connect** from the actions menu and choose **RDP**.
-
-    ![The option to connect to the virtual machine via RDP is selected.](media/azure-vm-connect.png "Connect via RDP")
-
-6. On the **Connect** tab, select **Download RDP File**.
-
-    ![Download the RDP file to connect to the Power BI virtual machine.](media/azure-vm-connect-2.png "Download RDP File")
-
-7. Open the RDP file and select **Connect** to access the virtual machine. When prompted for credentials, enter `labuser` for the username and the password you chose.
-
-    ![Connect to a remote host.](media/azure-vm-connect-3.png "Connect to a remote host")
-
-    Click Yes to connect despite security certificate errors when prompted.
-
-    ![The Yes button is highlighted.](media/rdp-connect-certificate.png "Remote Desktop Connection")
-
-8. Install [Power BI Desktop](https://www.microsoft.com/download/details.aspx?id=58494) on the VM.
-
-### Task 4: Create Azure resources
-
-Time to complete: 6 minutes
+Time to complete: 14 minutes
 
 The below ARM template deploys several Azure resources for the labs, including Azure Synapse Analytics, Azure Databricks, storage accounts, Event Hubs, Stream Analytics, Key Vault, Azure Cosmos DB, etc.
 
@@ -220,82 +169,19 @@ The below ARM template deploys several Azure resources for the labs, including A
 
 ## Exercise 2: Setup Synapse Analytics workspace
 
-The entire script will take about 15 minutes to complete. Major steps include:
+Time to complete: 29 minutes
+
+Major steps include:
 
 - Configure Synapse resources
 - Download all data sets and files into the data lake (~5 mins)
 - Execute the Cosmos DB pipeline (~10 mins)
 
-### Task 1: Pre-requisites
+### Task 1: Execute setup scripts
 
-Install these pre-requisites on your **deployment VM** before continuing.
+Time to complete: 20 minutes
 
-- Install VC Redist: <https://aka.ms/vs/15/release/vc_redist.x64.exe>
-- Install MS ODBC Driver 17 for SQL Server: <https://www.microsoft.com/download/confirmation.aspx?id=56567>
-- Install SQL CMD x64: <https://go.microsoft.com/fwlink/?linkid=2082790>
-- Install Microsoft Online Services Sign-In Assistant for IT Professionals RTW: <https://www.microsoft.com/download/details.aspx?id=28177>
-- Install [Git client](https://git-scm.com/downloads) accepting all the default options in the setup.
-- [Windows PowerShell](https://docs.microsoft.com/powershell/scripting/windows-powershell/install/installing-windows-powershell?view=powershell-7)
-
-### Task 2: Download artifacts and install PowerShell modules
-
-Perform all of the steps below from your **deployment VM**:
-
-1. Open a PowerShell Window as an administrator, run the following command to download the artifacts
-
-    ```powershell
-    mkdir c:\labfiles
-
-    cd c:\labfiles
-
-    git clone -b optimizations https://github.com/solliancenet/DP-203T00-Data-Engineering-on-Microsoft-Azure.git data-engineering-ilt-deployment
-    ```
-
-2. Install Azure PowerShell module
-
-    Open Windows PowerShell as an Administrator on your desktop and execute the following:
-
-    ```powershell
-    if (Get-Module -Name AzureRM -ListAvailable) {
-        Write-Warning -Message 'Az module not installed. Having both the AzureRM and Az modules installed at the same time is not supported.'
-        Uninstall-AzureRm -ea SilentlyContinue
-        Install-Module -Name Az -AllowClobber -Scope CurrentUser
-    } else {
-        Install-Module -Name Az -AllowClobber -Scope CurrentUser
-    }
-    ```
-
-    > [!Note]: You may be prompted to install NuGet providers, and receive a prompt that you are installing the module from an untrusted repository. Select **Yes** in both instances to proceed with the setup
-
-3. Install `Az.CosmosDB` module
-
-    ```powershell
-    Install-Module -Name Az.CosmosDB -AllowClobber
-    ```
-
-    > [!Note]: If you receive a prompt that you are installing the module from an untrusted repository, select **Yes to All** to proceed with the setup.
-
-4. Install `sqlserver` module
-
-    ```powershell
-    Install-Module -Name SqlServer -AllowClobber
-    ```
-
-5. Install Azure CLI
-
-    ```powershell
-    Invoke-WebRequest -Uri https://aka.ms/installazurecliwindows -OutFile .\AzureCLI.msi; Start-Process msiexec.exe -Wait -ArgumentList '/I AzureCLI.msi /quiet'; rm .\AzureCLI.msi
-    ```
-
-**IMPORTANT**
-
-- Once the last command has completed, **close the Windows PowerShell window** so you can import the newly installed Az.CosmosDB cmdlet.
-
-### Task 3: Execute setup scripts
-
-Time to complete: 15 minutes
-
-Perform all of the steps below from your **deployment VM**:
+Perform all of the steps below from your Virtual Machine:
 
 1. **Important step:** Go back to the Azure portal to make sure the **ARM template deployment has completed**. If it has not, these scripts will fail. *Wait until the deployment successfully completes*.
 
@@ -327,23 +213,25 @@ Perform all of the steps below from your **deployment VM**:
 
 6. Execute `Connect-AzAccount` and sign in to your Microsoft user account when prompted.
 
-    > [!WARNING]: You may receive the message "TenantId 'xxxxxx-xxxx-xxxx-xxxx' contains more than one active subscription. The first one will be selected for further use. You can ignore this at this point. When you execute the environment setup, you will choose the subscription in which you deployed the environment resources.
+    > [!WARNING]: You may receive the message "TenantId 'xxxxxx-xxxx-xxxx-xxxx' contains more than one active subscription. The first one will be selected for further use. Copy the tenant id so that you can paste it into the next command.
 
-7. Execute `.\01-environment-setup.ps1`
+7. Execute `az login --tenant <<tenant id>>` and paste the tenant id from the previous step. You will be directed to the browser to sign into your Azure account. Once you have signd in, move to the next step.
 
-   1. You will be prompted to setup your Azure PowerShell and Azure CLI context.
+8. Execute `.\01-environment-setup.ps1`
 
-   2. If you have more than one Azure Subscription, you will be prompted to enter the name of your desired Azure Subscription. You can copy and paste the value from the list to select one. For example:
+   1. If you have more than one Azure Subscription, you will be prompted to enter the name of your desired Azure Subscription. Copy and paste the value `Azure Pass - Sponsorship` from the list to select one. For example:
 
        ![A subscription is copied and pasted into the text entry.](media/select-desired-subscription.png "Select desired subscription")
 
-   3. Enter the name of the resource group you created at the beginning of the environment setup (such as `data-engineering-synapse`). This will make sure automation runs against the correct environment you provisioned in Azure.
+        > [!WARNING]: You may receive the message "Unable to acquire token for tenant...". This can be safely ignored.
+
+   3. Enter the name of the resource group named `data-engineering-synapse`. This will make sure automation runs against the correct environment you provisioned in Azure.
 
        > **NOTE** This script will take about 15-20 minutes to complete.
 
-### Task 4: Create an Azure Databricks cluster
+### Task 2: Create an Azure Databricks cluster
 
-Time to complete: 5 minutes
+Time to complete: 9 minutes
 
 1. While the PowerShell script executes, go back to the Azure portal. Navigate to your Azure resource group for this lab, then select the Azure Databricks workspace.
 
